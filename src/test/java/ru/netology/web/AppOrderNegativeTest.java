@@ -49,6 +49,17 @@ public class AppOrderNegativeTest {
     }
 
     @Test
+    public void testNameWithLetterYo() {
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Иванов Пётр");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79163295022");
+        driver.findElement(By.cssSelector("[data-test-id='agreement']")).click();
+        driver.findElement(By.cssSelector("button.button")).click();
+        assertEquals("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.",
+                driver.findElement(By.cssSelector("[data-test-id=name].input_invalid .input__sub")).getText().trim());
+        assertTrue(driver.findElement(By.cssSelector("[data-test-id=name].input_invalid .input__sub")).isDisplayed());
+    }
+    
+    @Test
     public void testNoValidPhone() {
         driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Иванова Мария Ивановна");
         driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+790655555");
